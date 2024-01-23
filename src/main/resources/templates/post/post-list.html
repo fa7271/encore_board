@@ -4,28 +4,34 @@
     <meta charset="UTF-8">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-
+    <style>
+        .pull-right{
+            float: right;
+            margin-left: 10px;
+        }
+    </style>
     <title>Title</title>
 </head>
 <body>
 <div th:replace="header :: headerFragment"></div>
 <div class="container">
     <div class="page-header"><h1>게시글 목록</h1></div>
+    <div class="pull-right">
+        <a href="/post/create" class="btn btn-primary">글쓰기</a>
+    </div>
     <table class="table">
         <thead>
-            <tr>
-                <th>id</th>
-                <th>이름</th>
-                <th>email</th>
-                <th>#</th>
-            </tr>
+        <tr>
+            <th>id</th>
+            <th>title</th>
+            <th>#</th>
+        </tr>
         </thead>
         <tbody>
-        <tr th:each="list:${authorList}">
+        <tr th:each="list:${postList}">
             <td th:text="${list.id}"></td>
-            <td th:text="${list.name}"></td>
-            <td th:text="${list.email}"></td>
-            <td><a th:href="@{|/author/author-detail/${author.id}|}">상세보기</a></td>
+            <td th:text="${list.title}"></td>
+            <td><a th:href="@{|/post/detail/${list.id}|}">상세보기</a></td>
         </tr>
         </tbody>
     </table>

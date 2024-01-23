@@ -1,4 +1,4 @@
-package com.encore.board.author.dto;
+package com.encore.board.author.dto.Author;
 
 import lombok.Data;
 
@@ -11,4 +11,5 @@ public class AuthorDetailResDto {
     private String email;
     private String password;
     private LocalDateTime createdTime;
+    private String role;
 }

@@ -21,58 +21,42 @@
 <div th:replace="header :: headerFragment"></div>
 <div class="container">
     <div class="page-header">
-        <h1>회원 상세보기</h1>
+        <h1>게시글 상세보기</h1>
     </div>
     <table class="table">
         <tr>
             <td>ID</td>
-            <td th:text="${author.id}"></td>
+            <td th:text="${post.id}"></td>
         </tr>
         <tr>
-            <td>Name</td>
-            <td th:text="${author.name}"></td>
+            <td>Title</td>
+            <td th:text="${post.title}"></td>
         </tr>
         <tr>
-            <td>EMAIL</td>
-            <td th:text="${author.email}"></td>
+            <td>Contents</td>
+            <td style="white-space: pre-wrap;" th:text="${post.contents}"></td>
         </tr>
         <tr>
-            <td>PASSWORD</td>
-            <td th:text="${author.password}"></td>
-        </tr>
-        <tr>
-            <td>가입시간</td>
-            <td th:text="${author.createdTime}"></td>
-        </tr>
-        <tr>
-            <td>Role</td>
-            <td th:text="${author.role}"></td>
+            <td>등록일시</td>
+            <td th:text="${post.createdTime}"></td>
         </tr>
     </table>
     <div class="pull-right">
         <button class="btn btn-primary" on onclick="showupdateform()">수정</button>
     </div>
     <div class="pull-right">
-        <a th:href="@{|/author/delete/${author.id}|}" class="btn btn-primary">삭제</a>
+        <a th:href="@{|/post/delete/${post.id}|}" class="btn btn-primary">삭제</a>
     </div>
     <br>
     <div id="update-form" class="mt-4">
-        <form th:action="@{|/author/${author.id}/update|}" method="POST">
+        <form th:action="@{|/post/${post.id}/update|}" method="POST">
             <div class="form-group">
-                <label for="id">id :</label>
-                <input type="text" id="id" name="id" class="form-control" th:value="${author.id}">
+                <label for="title">title :</label>
+                <input type="text" id="title" name="title" class="form-control" th:value="${post.title}">
             </div>
             <div class="form-group">
-                <label for="name">name :</label>
-                <input type="text" id="name" name="name" class="form-control" th:value="${author.name}">
-            </div>
-            <div class="form-group">
-                <label for="email">email :</label>
-                <input type="text" id="email" name="email" class="form-control" th:value="${author.email}" readonly>
-            </div>
-            <div class="form-group">
-                <label for="password">password :</label>
-                <input type="text" id="password" name="password" class="form-control" th:value="${author.password}">
+                <label for="contents">contents :</label>
+                <textarea id="contents" name="contents" class="form-control" style="width: 1100px; height: 300px" th:text="${post.contents}"></textarea>
             </div>
             <div class="form-group">
                 <button type="submit" class="btn btn-primary mt-3">수정완료</button>

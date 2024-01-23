@@ -1,4 +1,4 @@
-package com.encore.board.author.dto;
+package com.encore.board.author.dto.Author;
 
 import lombok.Data;
 
