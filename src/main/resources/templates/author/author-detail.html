@@ -48,6 +48,10 @@
             <td>Role</td>
             <td th:text="${author.role}"></td>
         </tr>
+        <tr>
+            <td>작성 글 수</td>
+            <td th:text="${author.counts}"></td>
+        </tr>
     </table>
     <div class="pull-right">
         <button class="btn btn-primary" on onclick="showupdateform()">수정</button>

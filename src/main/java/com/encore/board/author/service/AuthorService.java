@@ -9,12 +9,14 @@ import com.encore.board.author.dto.Author.AuthorUpdateReqDto;
 import com.encore.board.author.repository.AuthorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@Transactional
 public class AuthorService {
     private final AuthorRepository authorRepository;
 
@@ -38,12 +40,31 @@ public class AuthorService {
 //                authorSaveReqDto.getPassword(),
 //                role
 //        );
+
+
+
         Author author = Author.builder()
                 .name(authorSaveReqDto.getName())
                 .email(authorSaveReqDto.getEmail())
                 .password(authorSaveReqDto.getPassword())
                 .build();
+
+
+//        cascade.persist 테스트
+//        부모 테이블을 통해 자식테이블에 객체를 동시에 생성
+//        List<Post> posts = new ArrayList<>();
+//        Post post = Post.builder()
+//                .title("안녕하세요 " + author.getName() + " 입니다 ")
+//                .contents("반갑습니다 . test중입니다.")
+//                .author(author)
+//                .build();
+//        posts.add(post);
+//        author.setPosts(posts);
+
+
+
         authorRepository.save(author);
+
     }
 
     public List<AuthorListResDto> findAll() {
@@ -79,13 +100,17 @@ public class AuthorService {
         authorDetailResDto.setPassword(author.getPassword());
         authorDetailResDto.setCreatedTime(author.getCreatedTime());
         authorDetailResDto.setRole(role);
+        authorDetailResDto.setCounts(author.getPosts().size());
         return authorDetailResDto;
     }
 
     public void update(long id, AuthorUpdateReqDto authorUpdateReqDto) throws EntityNotFoundException{
         Author author = authorRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("없음"));
         author.updateAuthor(authorUpdateReqDto.getName(),authorUpdateReqDto.getPassword());
-        authorRepository.save(author);
+
+//        명시적으로 save를 하지 않더라고, jpa의 영속성 컨텍스트를 통해,
+//        객체에 변경이 감지(더티체킹)되면, 트랜잭션이 완료되는 시점에 save동작.
+//        authorRepository.save(author);
 
 //        AuthorDetailResDto author = this.findByID(id);
 //        author.updateAuthor(authorUpdateReqDto.getName(),authorUpdateReqDto.getPassword());
