@@ -10,12 +10,14 @@ import com.encore.board.post.dto.Post.PostUpdateReqDto;
 import com.encore.board.post.repository.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@Transactional
 public class PostService {
 
     private final PostRepository postRepository;
@@ -37,10 +39,11 @@ public class PostService {
     }
 
     public List<PostListResDto> findAll() {
-        List<Post> all = postRepository.findAllByOrderByCreatedTimeDesc();
+//        List<Post> all = postRepository.findAllByOrderByCreatedTimeDesc();
+        List<Post> posts = postRepository.findAllFetchJoin();
         ArrayList<PostListResDto> postlists = new ArrayList<>();
 
-        for (Post post : all) {
+        for (Post post : posts) {
             PostListResDto postListResDto = new PostListResDto();
             postListResDto.setId(post.getId());
             postListResDto.setTitle(post.getTitle());
@@ -63,6 +66,9 @@ public class PostService {
 //                postCreateReqDto.getContents()
 //        );
 
+        author.updateAuthor("dirtychecking test", "1234");
+//        더티체킹 테스트
+
         postRepository.save(post);
     }
 
@@ -74,7 +80,6 @@ public class PostService {
         postDetailResDto.setTitle(post.getTitle());
         postDetailResDto.setContents(post.getContents());
         return postDetailResDto;
-
     }
 
     public void update(long id, PostUpdateReqDto postUpdateReqDto) throws EntityNotFoundException{

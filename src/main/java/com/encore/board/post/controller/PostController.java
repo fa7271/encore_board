@@ -2,7 +2,6 @@ package com.encore.board.post.controller;
 
 import com.encore.board.post.dto.Post.PostCreateReqDto;
 import com.encore.board.post.dto.Post.PostDetailResDto;
-import com.encore.board.post.dto.Post.PostListResDto;
 import com.encore.board.post.dto.Post.PostUpdateReqDto;
 import com.encore.board.post.service.PostService;
 import org.springframework.stereotype.Controller;
@@ -10,8 +9,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-
-import java.util.List;
 
 @Controller
 public class PostController {
@@ -40,7 +37,6 @@ public class PostController {
 
     @GetMapping("/post/list")
     public String postList(Model model) {
-        List<PostListResDto> all = postService.findAll();
         model.addAttribute("postList", postService.findAll());
         return "post/post-list";
     }

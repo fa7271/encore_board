@@ -83,7 +83,11 @@ public class AuthorService {
     }
 
 
-    public AuthorDetailResDto findByID(long id) throws EntityNotFoundException {
+    public Author findById(long id) throws EntityNotFoundException {
+        Author author = authorRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("없음"));
+        return author;
+    }
+    public AuthorDetailResDto findAuthorDetail(long id) throws EntityNotFoundException {
         Author author = authorRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("없음"));
         String role = null;
         if (author.getRole() == null || author.getRole().equals(Role.USER)) {
