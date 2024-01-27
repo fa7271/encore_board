@@ -4,6 +4,9 @@ import com.encore.board.post.dto.Post.PostCreateReqDto;
 import com.encore.board.post.dto.Post.PostDetailResDto;
 import com.encore.board.post.dto.Post.PostUpdateReqDto;
 import com.encore.board.post.service.PostService;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,9 +27,15 @@ public class PostController {
     }
 
     @PostMapping("/post/create")
-    public String postSave(PostCreateReqDto postCreateReqDto) {
-        postService.save(postCreateReqDto);
-        return "redirect:/post/list";
+    public String postSave(Model model,PostCreateReqDto postCreateReqDto) {
+        try {
+            postService.save(postCreateReqDto);
+            return "redirect:/post/list";
+        } catch (IllegalArgumentException e) {
+            model.addAttribute("errorMessage", e.getMessage());
+            return "post/post-create";
+        }
+
     }
 
     @PostMapping("/post/{id}/update")
@@ -35,11 +44,34 @@ public class PostController {
         return "redirect:/post/detail/" + id;
     }
 
+
+
+//    @GetMapping("/post/list")
+////    localhost:8080/post/list?size=xx&page=xx&sort==xx
+//    public String postList(Model model, @PageableDefault(size = 5, sort = "createdTime",direction = Sort.Direction.DESC) Pageable pageable) {
+//        model.addAttribute("postList", postService.findAllPaging(pageable));
+//        return "post/post-list";
+//    }
+
+
     @GetMapping("/post/list")
-    public String postList(Model model) {
-        model.addAttribute("postList", postService.findAll());
+//    localhost:8080/post/list?size=xx&page=xx&sort==xx
+    public String postList(Model model, @PageableDefault(size = 5, sort = "createdTime",direction = Sort.Direction.DESC) Pageable pageable) {
+        model.addAttribute("postList", postService.findByAppointment(pageable));
         return "post/post-list";
     }
+
+/*
+
+    //    *** paging json test***
+    @GetMapping("/json/post/list")
+//    localhost:8080/post/list?size=xx&page=xx&sort==xx
+    @ResponseBody
+    public Page<PostListResDto> postList(Pageable pageable) {
+        Page<PostListResDto> postListResDtos = postService.findAlljson(pageable);
+        return postListResDtos;
+    }
+*/
 
     @GetMapping("/post/detail/{id}")
     public String postDetail(Model model, @PathVariable long id) {
@@ -47,6 +79,7 @@ public class PostController {
         model.addAttribute("post", postService.findById(id));
         return "post/post-detail";
     }
+
     @GetMapping("/post/delete/{id}")
     public String postDelete(@PathVariable long id) {
         postService.delete(id);

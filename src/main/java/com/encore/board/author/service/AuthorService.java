@@ -25,7 +25,8 @@ public class AuthorService {
         this.authorRepository = authorRepository;
     }
 
-    public void save(AuthorSaveReqDto authorSaveReqDto) {
+    public void save(AuthorSaveReqDto authorSaveReqDto) throws IllegalArgumentException{
+        if (authorRepository.findByEmail(authorSaveReqDto.getEmail()).isPresent()) throw new IllegalArgumentException("중복된 이메일");
         Role role = null;
         if (authorSaveReqDto.getRole() == null || authorSaveReqDto.getRole().equals("user")) {
             role =Role.USER;

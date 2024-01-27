@@ -1,6 +1,7 @@
 package com.encore.board.post.domain;
 
 import com.encore.board.author.domain.Author;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,6 +14,8 @@ import java.time.LocalDateTime;
 @Entity
 @NoArgsConstructor
 @Getter
+@Builder
+@AllArgsConstructor
 public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,6 +26,10 @@ public class Post {
 
     @Column(length = 2000, nullable = false)
     private String contents;
+
+    private String appointment;
+
+    private LocalDateTime appointmentTime;
 
 //    author_id 는 DB의 컬럼명, 별다른 옵션 없으면 author의 pk에 fk가 설정
 //    @JoinColumn(nullable = false,name = "author_email",referenceColumnName = "email)
@@ -42,17 +49,21 @@ public class Post {
     @Column(columnDefinition = "TIMESTAMP ON UPDATE CURRENT_TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     LocalDateTime updatedTime;
 
-    @Builder
-    public Post(String title, String contents, Author author) {
-        this.title = title;
-        this.contents = contents;
-        this.author = author;
+//    @Builder
+//    public Post(String title, String contents, Author author) {
+//        this.title = title;
+//        this.contents = contents;
+//        this.author = author;
 //        author 객체의 posts 를 초기화시켜준 후
 //        this.author.getPosts().add(this); setter 안 쓰고 하는 법
-    }
+//    }
 
     public void updatePost(String title, String contents) {
         this.title = title;
         this.contents = contents;
+    }
+
+    public void updateAppointment(String appointment) {
+        this.appointment = appointment;
     }
 }
