@@ -37,18 +37,17 @@
         </div>
         <button type="submit" class="btn btn-primary" mt-3>등록하기</button>
     </form>
-    <div th:if="${errorMessage != null}">
-        <input type ="hidden" id ="error" th:value="${errorMessage}"/>
-    </div>
+<!--    <div th:if="${errorMessage != null}">-->
+<!--        <input type ="hidden" id ="error" th:value="${errorMessage}"/>-->
+<!--    </div>-->
 </div>
 </body>
-<script>
-    let errorMessage = document.getElementById("error").value;
-    if (errorMessage) {
-        alert(errorMessage)
-    }
-</script>
-<!--
+<!--<script>-->
+<!--    let errorMessage = document.getElementById("error").value;-->
+<!--    if (errorMessage) {-->
+<!--        alert(errorMessage)-->
+<!--    }-->
+<!--</script>-->
 <script>
     document.addEventListener("DOMContentLoaded", function() {
         var appointmentTimeInput = document.getElementById("appointmentTime");
@@ -64,7 +63,6 @@
         });
     });
 </script>
--->
 
 <script>
 

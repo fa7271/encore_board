@@ -9,14 +9,12 @@ import com.encore.board.author.dto.Author.AuthorUpdateReqDto;
 import com.encore.board.author.repository.AuthorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
-@Transactional
 public class AuthorService {
     private final AuthorRepository authorRepository;
 
@@ -28,6 +26,7 @@ public class AuthorService {
     public void save(AuthorSaveReqDto authorSaveReqDto) throws IllegalArgumentException{
         if (authorRepository.findByEmail(authorSaveReqDto.getEmail()).isPresent()) throw new IllegalArgumentException("중복된 이메일");
         Role role = null;
+        System.out.println("role = " + authorSaveReqDto.getRole());
         if (authorSaveReqDto.getRole() == null || authorSaveReqDto.getRole().equals("user")) {
             role =Role.USER;
         }
@@ -48,6 +47,7 @@ public class AuthorService {
                 .name(authorSaveReqDto.getName())
                 .email(authorSaveReqDto.getEmail())
                 .password(authorSaveReqDto.getPassword())
+                .role(role)
                 .build();
 
 
@@ -85,7 +85,7 @@ public class AuthorService {
 
 
     public Author findById(long id) throws EntityNotFoundException {
-        Author author = authorRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("없음"));
+        Author author = authorRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("author not found"));
         return author;
     }
     public AuthorDetailResDto findAuthorDetail(long id) throws EntityNotFoundException {

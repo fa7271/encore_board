@@ -99,7 +99,6 @@ public class PostService {
             DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
             localDateTime = LocalDateTime.parse(postCreateReqDto.getAppointmentTime(), dateTimeFormatter);
             LocalDateTime now = localDateTime.now();
-            System.out.println(localDateTime);
             if (localDateTime.isBefore(now)) {
                 throw new IllegalArgumentException("시간정보 잘못입력");
             }
@@ -136,7 +135,7 @@ public class PostService {
     public void update(long id, PostUpdateReqDto postUpdateReqDto) throws EntityNotFoundException{
         Post post = postRepository.findById(id).orElseThrow(() -> new EntityNotFoundException());
         post.updatePost(postUpdateReqDto.getTitle(), postUpdateReqDto.getContents());
-        postRepository.save(post);
+//        postRepository.save(post);
 
     }
 }

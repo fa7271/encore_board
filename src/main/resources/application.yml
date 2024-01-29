@@ -11,3 +11,9 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
+logging:
+  file:
+    name: logs/app.log
+  level:
+    root: info # info? ??
+    # trace < debug < info < error ??? ????? ???.

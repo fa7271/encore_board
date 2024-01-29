@@ -39,7 +39,7 @@ public class PostScheduler {
             LocalDateTime now = LocalDateTime.now();
             if (p.getAppointmentTime().isBefore(now)) {
                 p.updateAppointment(null);
-//                postRepository.save(p);
+//                postReposito  ry.save(p);
             }
         }
         System.out.println("=== 스케쥴러 시작===");
