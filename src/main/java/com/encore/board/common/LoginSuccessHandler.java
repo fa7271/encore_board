@@ -17,6 +17,7 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
         HttpSession httpSession = request.getSession();
 //        authentication 안에는 User객체가 들어가 있고, 여기서 getName은 email 을 의미한다.
         httpSession.setAttribute("email", authentication.getName());
+        System.out.println(authentication.getName());
         response.sendRedirect("/");
     }
 }
