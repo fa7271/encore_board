@@ -8,6 +8,7 @@ import com.encore.board.author.dto.Author.AuthorSaveReqDto;
 import com.encore.board.author.dto.Author.AuthorUpdateReqDto;
 import com.encore.board.author.repository.AuthorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
@@ -17,36 +18,33 @@ import java.util.List;
 @Service
 public class AuthorService {
     private final AuthorRepository authorRepository;
+    private final PasswordEncoder passwordEncoder;
+
 
     @Autowired
-    public AuthorService(AuthorRepository authorRepository) {
+    public AuthorService(AuthorRepository authorRepository, PasswordEncoder passwordEncoder) {
         this.authorRepository = authorRepository;
+        this.passwordEncoder = passwordEncoder;
+    }
+
+    public Author findByEmail(String email) throws EntityNotFoundException {
+        Author author = authorRepository.findByEmail(email).orElseThrow(EntityNotFoundException::new);
+        return author;
     }
 
     public void save(AuthorSaveReqDto authorSaveReqDto) throws IllegalArgumentException{
         if (authorRepository.findByEmail(authorSaveReqDto.getEmail()).isPresent()) throw new IllegalArgumentException("중복된 이메일");
         Role role = null;
-        System.out.println("role = " + authorSaveReqDto.getRole());
         if (authorSaveReqDto.getRole() == null || authorSaveReqDto.getRole().equals("user")) {
             role =Role.USER;
         }
         else {
             role = Role.ADMIN;
         }
-//        일반 생성자 방식
-//        Author author = new Author(
-//                authorSaveReqDto.getName(),
-//                authorSaveReqDto.getEmail(),
-//                authorSaveReqDto.getPassword(),
-//                role
-//        );
-
-
-
         Author author = Author.builder()
                 .name(authorSaveReqDto.getName())
                 .email(authorSaveReqDto.getEmail())
-                .password(authorSaveReqDto.getPassword())
+                .password(passwordEncoder.encode(authorSaveReqDto.getPassword()))
                 .role(role)
                 .build();
 

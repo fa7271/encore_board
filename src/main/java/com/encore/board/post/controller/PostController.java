@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import javax.servlet.http.HttpSession;
+
 @Slf4j
 @Controller
 public class PostController {
@@ -29,9 +31,12 @@ public class PostController {
     }
 
     @PostMapping("/post/create")
-    public String postSave(Model model,PostCreateReqDto postCreateReqDto) {
+    public String postSave(Model model, PostCreateReqDto postCreateReqDto, HttpSession httpSession) {
         try {
-            postService.save(postCreateReqDto);
+            postService.save(postCreateReqDto,httpSession.getAttribute("email").toString());
+
+//            HttpSession session = req.getSession(); 매개변수 주입한 뒤에
+//            System.out.println(session.getAttribute("email")); 세션값을 꺼낸다.
             return "redirect:/post/list";
         } catch (IllegalArgumentException e) {
             model.addAttribute("errorMessage", e.getMessage());

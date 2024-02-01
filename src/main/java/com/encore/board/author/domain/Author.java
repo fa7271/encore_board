@@ -39,7 +39,7 @@ public class Author {
 //    list쓰는 이유는 1:N이 될 수도 있기 때문이다.
 //    mappedBy 연관관계의 주인을 명시하고, fk 를 관리하는 변수명을 명시한다. 일반적으로 부모에서 건다.
 //    LAZY 지연로딩, EAGER 즉시로ㅂ
-    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "author",fetch = FetchType.LAZY)
 //    @OneToOne 1:1 상황
     @Setter // cascade = CascadeType.ALL test 위한 설정
     private List<Post> posts;

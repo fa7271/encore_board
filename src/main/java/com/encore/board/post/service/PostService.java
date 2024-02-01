@@ -91,8 +91,11 @@ public class PostService {
         return postListResDtos;
     }
 
-    public void save(PostCreateReqDto postCreateReqDto) throws IllegalArgumentException{
-        Author author = authorRepository.findByEmail(postCreateReqDto.getEmail()).orElse(null);
+    public void save(PostCreateReqDto postCreateReqDto, String email) throws IllegalArgumentException{
+//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//        String email = authentication.getName();
+
+        Author author = authorRepository.findByEmail(email).orElse(null);
         LocalDateTime localDateTime = null;
         String appointment = null;
         if (postCreateReqDto.getAppointment().equals("Y") && !postCreateReqDto.getAppointmentTime().isEmpty()) {
