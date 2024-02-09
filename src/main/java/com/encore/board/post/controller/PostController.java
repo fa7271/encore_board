@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 @Slf4j
@@ -31,7 +32,13 @@ public class PostController {
     }
 
     @PostMapping("/post/create")
-    public String postSave(Model model, PostCreateReqDto postCreateReqDto, HttpSession httpSession) {
+    public String postSave(Model model, PostCreateReqDto postCreateReqDto, HttpSession httpSession, HttpServletRequest httpServletRequest) {
+
+        String filteredContents = (String) httpServletRequest.getAttribute("filteredContents");
+        System.out.println("filteredContents = " + filteredContents);
+        if (filteredContents != null) {
+            postCreateReqDto.setContents(filteredContents);
+        }
         try {
             postService.save(postCreateReqDto,httpSession.getAttribute("email").toString());
 
@@ -43,7 +50,6 @@ public class PostController {
             log.error(e.getMessage());
             return "post/post-create";
         }
-
     }
 
     @PostMapping("/post/{id}/update")

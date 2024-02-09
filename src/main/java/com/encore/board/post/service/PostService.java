@@ -31,6 +31,7 @@ public class PostService {
     public PostService(PostRepository postRepository, AuthorRepository authorRepository) {
         this.postRepository = postRepository;
         this.authorRepository = authorRepository;
+
     }
 
 //    public PostService(PostRepository postRepository) {
