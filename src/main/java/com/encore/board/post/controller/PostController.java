@@ -60,7 +60,7 @@ public class PostController {
 
 
 
-//    @GetMapping("/post/list")
+//    @GetMapping("/post/list") 1
 ////    localhost:8080/post/list?size=xx&page=xx&sort==xx
 //    public String postList(Model model, @PageableDefault(size = 5, sort = "createdTime",direction = Sort.Direction.DESC) Pageable pageable) {
 //        model.addAttribute("postList", postService.findAllPaging(pageable));
