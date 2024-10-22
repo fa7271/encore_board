@@ -51,14 +51,4 @@
         <appender-ref ref="FILE"/>
         <appender-ref ref="ERROR_FILE"/>
     </root>
-
-    <!--     error로그의 경우 에러 log파일로 분리-->
-<!--    <logger level="error" name="com.encore.board">-->
-<!--        <appender-ref ref="ERROR_FILE"/>-->
-<!--    </logger>-->
 </configuration>
-
-
-        <!--application. yml 에서 설정하던것을
-        더욱 상세하게 설정하기 위해서 따로 파일을 만든다.
-        -->

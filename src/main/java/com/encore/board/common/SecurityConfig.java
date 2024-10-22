@@ -24,7 +24,7 @@ public class SecurityConfig {
 //                url마다 인증처리 할지 말지 설정한다.
                 .authorizeRequests()
 //                인증 미 적용 url
-                .antMatchers("/", "/author/create", "/author/login-page")
+                .antMatchers("/", "/author/create", "/author/login-page","/redisincr","/incrAndCopy")
                 .permitAll()
 //                그 외에 인증 모두 필요
                 .anyRequest().authenticated()

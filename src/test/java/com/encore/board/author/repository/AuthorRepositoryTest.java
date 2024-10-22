@@ -6,15 +6,14 @@ import com.encore.board.author.domain.Role;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.ActiveProfiles;
 
+
 // @DataJpaTest를 사용하면 매 테스트가 종료되면 자동으로 DB원상복구
 // 모든 스프링빈을 생성하지 않고, DB테스트 특화 어노테이션
 @DataJpaTest
-
 
 // test 파일에서 yml을 찾으려고 한다. 하지만 test패키지 에는 없다.
 //replace = AutoConfigureTestDatabase.Replace.Any : H2Db(스프링 내장 인메모리)가 기본설정이다
@@ -28,7 +27,6 @@ import org.springframework.test.context.ActiveProfiles;
 @ActiveProfiles("test") // applications-test.yml 를 찾아 설정값 세팅
 
 public class AuthorRepositoryTest {
-    @Autowired
     private AuthorRepository authorRepository;
 
     @Test

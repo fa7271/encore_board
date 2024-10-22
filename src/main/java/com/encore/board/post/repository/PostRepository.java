@@ -17,7 +17,6 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     //    pageable 객체 안에 pageNumber(page = n), page마다개수(size = n), 정렬(sort = createdTime,desc)
 //    page객체 : List<Post> + 해당 Page의 각종 정보
     Page<Post> findAll(Pageable pageable);
-
 //    @Override
 //    <S extends Post> Page<S> findAll(Example<S> example, Pageable pageable);
 
